@@ -1,7 +1,6 @@
 package com.example.ESGI.Controllers;
 import com.example.ESGI.model.User;
 import com.example.ESGI.Repositories.*;
-
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.List;
