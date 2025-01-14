@@ -29,4 +29,17 @@ public class UserController {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+    @PostMapping("/login")
+    public User login(@RequestParam String username, @RequestParam String password) {
+        Optional<User> userOptional = userRepository.findByEmail(username);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getMotDePasse().equals(password)) {
+                return user;  // Return the user object if credentials match
+            }
+        }
+        return null;  // Return null if username or password is incorrect
+    }
 }
+
