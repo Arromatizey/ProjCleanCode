@@ -1,0 +1,42 @@
+<!-- src/app/pages/login/login.component.html -->
+<div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+  <h2 class="text-xl font-bold mb-4">Connexion</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- Email -->
+    <div class="mb-4">
+      <label for="userEmail" class="block font-medium mb-1">Email</label>
+      <input
+        id="userEmail"
+        type="email"
+        formControlName="userEmail"
+        class="border border-gray-300 rounded w-full p-2"
+      />
+      <div class="text-red-500 text-sm" *ngIf="loginForm.get('userEmail')?.invalid && loginForm.get('userEmail')?.touched">
+        Veuillez saisir une adresse email valide.
+      </div>
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="mb-4">
+      <label for="userPassword" class="block font-medium mb-1">Mot de passe</label>
+      <input
+        id="userPassword"
+        type="password"
+        formControlName="userPassword"
+        class="border border-gray-300 rounded w-full p-2"
+      />
+      <div class="text-red-500 text-sm" *ngIf="loginForm.get('userPassword')?.invalid && loginForm.get('userPassword')?.touched">
+        Mot de passe requis.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="loginForm.invalid"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Se connecter
+    </button>
+  </form>
+</div>

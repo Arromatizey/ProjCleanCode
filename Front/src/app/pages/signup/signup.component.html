@@ -1,0 +1,56 @@
+<!-- src/app/pages/signup/signup.component.html -->
+<div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+  <h2 class="text-xl font-bold mb-4">Inscription</h2>
+
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <!-- Nom d'utilisateur -->
+    <div class="mb-4">
+      <label for="userName" class="block font-medium mb-1">Nom d'utilisateur</label>
+      <input
+        id="userName"
+        type="text"
+        formControlName="userName"
+        class="border border-gray-300 rounded w-full p-2"
+      />
+      <div class="text-red-500 text-sm" *ngIf="signupForm.get('userName')?.invalid && signupForm.get('userName')?.touched">
+        Le nom d'utilisateur doit comporter au moins 3 caractères.
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-4">
+      <label for="userEmail" class="block font-medium mb-1">Email</label>
+      <input
+        id="userEmail"
+        type="email"
+        formControlName="userEmail"
+        class="border border-gray-300 rounded w-full p-2"
+      />
+      <div class="text-red-500 text-sm" *ngIf="signupForm.get('userEmail')?.invalid && signupForm.get('userEmail')?.touched">
+        Veuillez saisir une adresse email valide.
+      </div>
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="mb-4">
+      <label for="userPassword" class="block font-medium mb-1">Mot de passe</label>
+      <input
+        id="userPassword"
+        type="password"
+        formControlName="userPassword"
+        class="border border-gray-300 rounded w-full p-2"
+      />
+      <div class="text-red-500 text-sm" *ngIf="signupForm.get('userPassword')?.invalid && signupForm.get('userPassword')?.touched">
+        Le mot de passe doit comporter au moins 6 caractères.
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="signupForm.invalid"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      S'inscrire
+    </button>
+  </form>
+</div>

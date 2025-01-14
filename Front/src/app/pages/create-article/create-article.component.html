@@ -1,0 +1,57 @@
+<!-- src/app/pages/create-article/create-article.component.html -->
+<div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+  <h2 class="text-xl font-bold mb-4">Créer un article</h2>
+
+  <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
+    <!-- Titre -->
+    <div class="mb-4">
+      <label for="title" class="block font-medium mb-1">Titre</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        class="border border-gray-300 rounded w-full p-2"
+      />
+      <div class="text-red-500 text-sm" *ngIf="articleForm.get('title')?.invalid && articleForm.get('title')?.touched">
+        Le titre est requis (3 caractères minimum).
+      </div>
+    </div>
+
+    <!-- Contenu -->
+    <div class="mb-4">
+      <label for="content" class="block font-medium mb-1">Contenu</label>
+      <textarea
+        id="content"
+        rows="6"
+        formControlName="content"
+        class="border border-gray-300 rounded w-full p-2"
+      ></textarea>
+      <div class="text-red-500 text-sm" *ngIf="articleForm.get('content')?.invalid && articleForm.get('content')?.touched">
+        Le contenu est requis (10 caractères minimum).
+      </div>
+    </div>
+
+    <!-- Date de publication -->
+    <div class="mb-4">
+      <label for="publicationDate" class="block font-medium mb-1">Date de publication</label>
+      <input
+        id="publicationDate"
+        type="date"
+        formControlName="publicationDate"
+        class="border border-gray-300 rounded w-full p-2"
+      />
+      <div class="text-red-500 text-sm" *ngIf="articleForm.get('publicationDate')?.invalid && articleForm.get('publicationDate')?.touched">
+        Veuillez saisir une date valide.
+      </div>
+    </div>
+
+    <!-- Bouton -->
+    <button
+      type="submit"
+      [disabled]="articleForm.invalid"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Publier l'article
+    </button>
+  </form>
+</div>
