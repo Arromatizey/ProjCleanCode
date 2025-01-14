@@ -1,28 +1,40 @@
 // src/app/pages/home/home.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { Service, Article } from '../../services/service.component'; // ajustez le chemin
+// si vous renommez
 @Component({
   standalone: true,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [CommonModule, RouterModule]
+  imports: [CommonModule, RouterModule],
 })
-export class HomeComponent {
-  articles = [
-    { id: 1, title: 'Mon premier article', content: 'Lorem ipsum dolor sit amet...' },
-    { id: 2, title: 'Angular Tips', content: 'Découvrez comment utiliser Angular...' },
-    { id: 3, title: 'Propreté du code', content: 'Quelques bonnes pratiques...' },
-    // ... vous pourrez remplacer par des données réelles ou un service
-  ];
+export class HomeComponent implements OnInit {
+  // On stocke ici les articles récupérés
+  articles: Article[] = [];
 
   searchQuery = '';
 
+  constructor(private service: Service) {}
+
+  ngOnInit(): void {
+    // Au chargement du composant, on récupère la liste des articles depuis le backend
+    this.service.getArticles().subscribe({
+      next: (data) => {
+        this.articles = data;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des articles :', err);
+      },
+    });
+  }
+
+  // Filtre la liste des articles par titre
   get filteredArticles() {
     const queryLower = this.searchQuery.toLowerCase();
-    return this.articles.filter(article =>
+    return this.articles.filter((article) =>
       article.title.toLowerCase().includes(queryLower)
     );
   }

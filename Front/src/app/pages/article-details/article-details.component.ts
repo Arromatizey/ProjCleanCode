@@ -4,17 +4,18 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { Service, Article } from '../../services/service.component';
 
 @Component({
   standalone: true,
   selector: 'app-article-details',
   templateUrl: './article-details.component.html',
   styleUrls: ['./article-details.component.css'],
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class ArticleDetailsComponent implements OnInit {
   articleId: number | null = null;
-  article: any; // Dans la vraie appli, vous aurez un modèle / interface
+  article: Article | null = null;
   comments: any[] = [];
 
   commentForm: FormGroup;
@@ -22,10 +23,11 @@ export class ArticleDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private service: Service
   ) {
     this.commentForm = this.formBuilder.group({
-      content: ['', [Validators.required, Validators.minLength(3)]]
+      content: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
@@ -33,23 +35,27 @@ export class ArticleDetailsComponent implements OnInit {
     // Récupération du paramètre d'URL
     this.articleId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Simuler la récupération de l'article
-    this.article = {
-      id: this.articleId,
-      title: 'Exemple d’article',
-      content: 'Contenu complet de l’article...',
-      publicationDate: '2025-01-14'
-    };
+    // On récupère l'article depuis le backend
+    if (this.articleId) {
+      this.service.getArticleById(this.articleId).subscribe({
+        next: (data) => {
+          this.article = data;
+          console.log('Article récupéré :', data);
+          // Ici, vous pourrez appeler un service pour récupérer les commentaires liés
+          // ex. this.commentService.getCommentsByArticleId(this.articleId)...
+        },
+        error: (err) => {
+          console.error('Erreur récupération article :', err);
+        },
+      });
+    }
 
-    // Simuler la récupération de commentaires
+    // Exemples de commentaires existants en dur :
     this.comments = [
       { id: 1, content: 'Premier commentaire', author: 'Alice' },
-      { id: 2, content: 'Super article !', author: 'Bob' }
+      { id: 2, content: 'Super article !', author: 'Bob' },
       // ...
     ];
-
-    // Dans la vraie vie : articleService.getArticleById(this.articleId).subscribe(...)
-    //                 : commentService.getCommentsByArticleId(...)
   }
 
   onSubmitComment(): void {
@@ -57,11 +63,9 @@ export class ArticleDetailsComponent implements OnInit {
       const newComment = {
         id: Math.random(), // ID fictif
         content: this.commentForm.value.content,
-        author: 'MonUser' // À ajuster selon votre auth
+        author: 'MonUser', // À ajuster selon votre auth
       };
       this.comments.push(newComment);
-
-      // Reset du formulaire
       this.commentForm.reset();
       console.log('Nouveau commentaire ajouté:', newComment);
 
