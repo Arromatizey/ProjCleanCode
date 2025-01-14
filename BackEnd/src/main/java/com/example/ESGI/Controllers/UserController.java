@@ -30,8 +30,8 @@ public class UserController {
         return userRepository.findAll();
     }
     @PostMapping("/login")
-    public User login(@RequestParam String username, @RequestParam String password) {
-        Optional<User> userOptional = userRepository.findByEmail(username);
+    public User login(@RequestParam String email, @RequestParam String password) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
