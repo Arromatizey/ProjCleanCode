@@ -17,7 +17,12 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+        User copiedUser = new User();
+
+        copiedUser.setName(user.getName());
+        copiedUser.setEmail(user.getEmail());
+        copiedUser.setMotDePasse(user.getMotDePasse());
+        return userRepository.save(copiedUser);
     }
 
     @GetMapping("/{id}")

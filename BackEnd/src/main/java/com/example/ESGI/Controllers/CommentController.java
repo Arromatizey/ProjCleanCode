@@ -24,7 +24,20 @@ public class CommentController {
 
     @PostMapping
     public Comment createComment(@RequestBody Comment comment) {
-        return commentRepository.save(comment);
+        Comment copiedComment = new Comment();
+
+        copiedComment.setContent(comment.getContent());
+        copiedComment.setPublicationDate(comment.getPublicationDate());
+
+        if (comment.getAuthor() != null) {
+            copiedComment.setAuthor(comment.getAuthor());
+        }
+
+        if (comment.getArticle() != null) {
+            copiedComment.setArticle(comment.getArticle());
+        }
+
+        return commentRepository.save(copiedComment);
     }
 
     @GetMapping("/{articleId}")
