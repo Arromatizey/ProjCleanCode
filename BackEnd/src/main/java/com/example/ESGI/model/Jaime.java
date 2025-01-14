@@ -2,13 +2,12 @@ package com.example.ESGI.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
 @Data
-@Table(name = "like")
-public class Like {
+@Table(name = "jaime")
+public class Jaime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
