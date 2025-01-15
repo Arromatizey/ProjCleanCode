@@ -15,10 +15,9 @@ jobs:
       mariadb:
         image: mariadb:latest
         ports:
-          - 3307:3306
+          - 3306:3306
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
-          MARIADB_ROOT_PASSWORD: ""
           MARIADB_DATABASE: cleancode
         options: >-
           --health-cmd="mysqladmin ping -h localhost --silent"
@@ -49,6 +48,6 @@ jobs:
       - name: Run tests
         run: mvn test
         env:
-          SPRING_DATASOURCE_URL: jdbc:mariadb://127.0.0.1:3307/cleancode
+          SPRING_DATASOURCE_URL: jdbc:mariadb://127.0.0.1:330/cleancode
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: ""
