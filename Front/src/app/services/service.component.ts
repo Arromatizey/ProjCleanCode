@@ -90,7 +90,12 @@ export class Service {
   }
 
   signupUser(name: string, email: string, password: string): Observable<User>{
-    const url = `${this.apiUrlUsers}/name=${name}&email=${email}&password${password}`;
+    const url = `${this.apiUrlUsers}/create-user?name=${name}&email=${email}&motDePasse=${password}`;
+    return this.http.post<User>(url, {});
+  }
+
+  createArticle(title: string, content: string, id: number){
+    const url = `${this.apiUrlArticles}/create-article?title=${title}&content=${content}&id=${id}`
     return this.http.post<User>(url, {});
   }
 
