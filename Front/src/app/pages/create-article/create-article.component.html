@@ -40,23 +40,6 @@
         </div>
       </div>
 
-      <!-- Date de publication -->
-      <div class="mb-6">
-        <label for="publicationDate" class="block font-medium mb-1 text-gray-700">Date de publication</label>
-        <input
-          id="publicationDate"
-          type="date"
-          formControlName="publicationDate"
-          class="border border-gray-300 rounded w-full p-3 focus:outline-none focus:border-gray-400"
-        />
-        <div
-          class="text-red-500 text-sm mt-1"
-          *ngIf="articleForm.get('publicationDate')?.invalid && articleForm.get('publicationDate')?.touched"
-        >
-          Veuillez saisir une date valide.
-        </div>
-      </div>
-
       <!-- Bouton -->
       <button
         type="submit"
