@@ -13,18 +13,18 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       mariadb:
-        image: mariadb:latest
+        image: mariadb:10.9
         ports:
           - 3306:3306
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+          MARIADB_ROOT_PASSWORD: ""
           MARIADB_DATABASE: cleancode
         options: >-
-          --health-cmd="mysqladmin ping -h localhost --silent"
+          --health-cmd="mysqladmin ping -h localhost || exit 1"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
-          --disable-content-trust
+          --health-retries=10
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,6 +34,18 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
+
+      - name: Wait for MariaDB to be ready
+        run: |
+          echo "Waiting for MariaDB to be healthy..."
+          for i in {1..30}; do
+            if docker inspect --format='{{.State.Health.Status}}' $(docker ps -aqf "ancestor=mariadb:latest") | grep -q 'healthy'; then
+              echo "MariaDB is healthy!"
+              break
+            fi
+            echo "MariaDB not healthy yet, retrying in 5 seconds..."
+            sleep 5
+          done
 
       - name: Debug MariaDB Logs on Failure
         if: failure()
@@ -48,6 +60,8 @@ jobs:
       - name: Run tests
         run: mvn test
         env:
-          SPRING_DATASOURCE_URL: jdbc:mariadb://127.0.0.1:330/cleancode
+          SPRING_DATASOURCE_URL: jdbc:mariadb://127.0.0.1:3306/cleancode
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: ""
+
+
