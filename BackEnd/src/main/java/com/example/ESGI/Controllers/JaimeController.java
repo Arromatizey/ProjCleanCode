@@ -3,6 +3,7 @@ package com.example.ESGI.Controllers;
 import com.example.ESGI.model.Jaime;
 import com.example.ESGI.Repositories.JaimeRepository;
 import com.example.ESGI.Repositories.ArticleRepository;
+import com.example.ESGI.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,11 @@ public class JaimeController {
     // Endpoint to post a like ("jaime") on an article
     @PostMapping
     public Jaime createJaime(@RequestBody Jaime jaime) {
-        return jaimeRepository.save(jaime);
+        Jaime copiedjaime = new Jaime();
+
+        copiedjaime.setUser(jaime.getUser());
+        copiedjaime.setArticle(jaime.getArticle());
+        return jaimeRepository.save(copiedjaime);
     }
 
     // Endpoint to get all likes for a specific article by articleId

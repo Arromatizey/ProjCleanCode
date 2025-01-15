@@ -13,17 +13,16 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     services:
-      mysql:
-        image: mysql:latest  # L'image Docker officielle de MySQL
+      mariadb:
+        image: mariadb:latest  # L'image Docker officielle de MariaDB
         ports:
           - 3306:3306  # Mappe le port 3306 du container au port 3306 de la machine hôte
         env:
-          MYSQL_ROOT_PASSWORD: rootpassword  # Mot de passe root pour MySQL
-          MYSQL_DATABASE: testdb  # Nom de la base de données à créer
-          MYSQL_USER: testuser  # Utilisateur MySQL
-          MYSQL_PASSWORD: testpassword  # Mot de passe de l'utilisateur MySQL
-        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=5  # Vérification de la santé de MySQL
-
+          MARIADB_ROOT_PASSWORD: rootpassword  # Mot de passe root pour MariaDB
+          MARIADB_DATABASE: testdb  # Nom de la base de données à créer
+          MARIADB_USER: testuser  # Utilisateur MariaDB
+          MARIADB_PASSWORD: testpassword  # Mot de passe de l'utilisateur MariaDB
+        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=5  # Vérification de la santé de MariaDB
 
     # Étapes du job
     steps:
@@ -42,6 +41,6 @@ jobs:
       - name: Run tests
         run: mvn test
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/testdb  # URL de connexion à MySQL
-          SPRING_DATASOURCE_USERNAME: testuser  # Utilisateur MySQL
-          SPRING_DATASOURCE_PASSWORD: testpassword  # Mot de passe MySQL
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/testdb  # URL de connexion à MariaDB
+          SPRING_DATASOURCE_USERNAME: testuser  # Utilisateur MariaDB
+          SPRING_DATASOURCE_PASSWORD: testpassword  # Mot de passe MariaDB

@@ -18,7 +18,12 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+        User copiedUser = new User();
+
+        copiedUser.setName(user.getName());
+        copiedUser.setEmail(user.getEmail());
+        copiedUser.setMotDePasse(user.getMotDePasse());
+        return userRepository.save(copiedUser);
     }
 
     @GetMapping("/{id}")
@@ -31,8 +36,8 @@ public class UserController {
         return userRepository.findAll();
     }
     @PostMapping("/login")
-    public User login(@RequestParam String username, @RequestParam String password) {
-        Optional<User> userOptional = userRepository.findByEmail(username);
+    public User login(@RequestParam String email, @RequestParam String password) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();

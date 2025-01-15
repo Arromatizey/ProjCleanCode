@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.List;
 
@@ -21,7 +23,17 @@ public class ArticleController {
 
     @PostMapping
     public Article createArticle(@RequestBody Article article) {
-        return articleRepository.save(article);
+        Article copiedArticle = new Article();
+
+        copiedArticle.setTitle(article.getTitle());
+        copiedArticle.setContent(article.getContent());
+        copiedArticle.setPublicationDate(LocalDateTime.now()); // Always setting the current publication date
+
+        if (article.getAuthor() != null) {
+            copiedArticle.setAuthor(article.getAuthor());
+        }
+
+        return articleRepository.save(copiedArticle);
     }
 
     @GetMapping("/{id}")
@@ -33,4 +45,14 @@ public class ArticleController {
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
     }
+
+    @GetMapping("/searchByKeyword")
+    public List<Article> searchArticles(@RequestParam String keyword) {
+        return articleRepository.findByTitleContainingOrContentContaining(keyword, keyword);
+    }
+    @GetMapping("/searchByAuthorId")
+    public List<Article> searchArticlesByAuthor(@RequestParam Long authorId) {
+        return articleRepository.findByAuthorId(authorId);
+    }
+
 }
