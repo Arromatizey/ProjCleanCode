@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/likes")  // You could adjust the path if you want
+@CrossOrigin(origins = "http://localhost:4200") // ou "*"
 public class JaimeController {
 
     private final JaimeRepository jaimeRepository;

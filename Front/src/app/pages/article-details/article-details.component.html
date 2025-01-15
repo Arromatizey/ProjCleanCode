@@ -1,6 +1,7 @@
 <!-- src/app/pages/article-details/article-details.component.html -->
 <div class="container mx-auto p-4">
   <!-- Affichage de l'article -->
+  <!-- Affichage de l'article -->
   <div class="bg-white p-4 rounded-md shadow-md mb-6">
     <div *ngIf="article as currentArticle">
       <h2 class="text-2xl font-bold mb-2">{{ currentArticle.title }}</h2>
@@ -9,16 +10,33 @@
     </div>
   </div>
 
+  <div class="mt-2">
+<!--    <button-->
+<!--      class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"-->
+<!--      (click)="likeArticle()"-->
+<!--    >-->
+<!--      Liker-->
+<!--    </button>-->
+    <span class="ml-2">Likes : {{ likes.length }}</span>
+  </div>
+
   <!-- Affichage des commentaires -->
   <div class="bg-white p-4 rounded-md shadow-md mb-6">
     <h3 class="text-xl font-semibold mb-4">Commentaires</h3>
-
     <ul>
       <li
         *ngFor="let comment of comments"
         class="mb-2 p-2 border-b border-gray-300"
       >
-        <span class="font-medium">{{ comment.author }} : </span>
+        <span class="font-medium">
+          <ng-container *ngIf="isAuthorObject(comment.author); else stringAuthor">
+            {{ comment.author?.name }}
+          </ng-container>
+          <ng-template #stringAuthor>
+            {{ comment.author }}
+          </ng-template>
+          :
+        </span>
         <span>{{ comment.content }}</span>
       </li>
     </ul>
@@ -53,4 +71,5 @@
       </button>
     </form>
   </div>
+
 </div>

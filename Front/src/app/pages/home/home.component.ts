@@ -20,16 +20,30 @@ export class HomeComponent implements OnInit {
   constructor(private service: Service) {}
 
   ngOnInit(): void {
-    // Au chargement du composant, on récupère la liste des articles depuis le backend
     this.service.getArticles().subscribe({
       next: (data) => {
         this.articles = data;
+
+        // Appeler getLikesByArticleId(article.id) pour chaque article
+        this.articles.forEach((article) => {
+          this.service.getLikesByArticleId(article.id).subscribe({
+            next: (likes) => {
+              // Stocker la taille du tableau de likes
+              article.likesCount = likes.length;
+            },
+            error: (err) => {
+              console.error('Erreur lors de la récupération des likes de l’article', article.id, err);
+              // On peut mettre article.likesCount = 0 par défaut
+            }
+          });
+        });
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des articles :', err);
-      },
+      }
     });
   }
+
 
   // Filtre la liste des articles par titre
   get filteredArticles() {

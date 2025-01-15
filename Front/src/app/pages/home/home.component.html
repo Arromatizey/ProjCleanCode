@@ -22,6 +22,10 @@
       <!-- Affiche le début du contenu -->
       {{ article.content | slice:0:50 }}...
     </p>
+
+    <div class="mt-1 text-gray-600">
+      👍 {{ article.likesCount }} likes
+    </div>
   </div>
 
   <!-- Lien / bouton vers la création d’un article -->
