@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// Exemple d'interface pour un Article
 export interface Article {
   id: number;
   title: string;
@@ -38,7 +37,6 @@ export interface Like {
     title: string;
     content: string;
     publicationDate: string;
-    // etc.
   };
 }
 
@@ -61,31 +59,24 @@ export class Service {
 
   constructor(private http: HttpClient) {}
 
-  // Récupérer la liste de tous les articles
   getArticles(): Observable<Article[]> {
     return this.http.get<Article[]>(this.apiUrlArticles);
   }
 
-  // Récupérer UN article par son ID
   getArticleById(id: number): Observable<Article> {
     return this.http.get<Article>(`${this.apiUrlArticles}/${id}`);
   }
 
-  // Récupérer TOUS les commentaires pour un article donné
   getCommentsByArticleId(articleId: number): Observable<Comment[]> {
-    // L’API attend /api/comments/{articleId}, qui retourne un tableau
     return this.http.get<Comment[]>(`${this.apiUrlComments}/${articleId}`);
   }
 
-  // Récupérer TOUS les likes pour un article donné
   getLikesByArticleId(articleId: number): Observable<Like[]> {
     return this.http.get<Like[]>(`${this.apiUrlLikes}/${articleId}`);
   }
 
   loginUser(email: string, password: string): Observable<User> {
-    // D'après votre Swagger, c'est un POST sur /api/users/login?email=...&password=...
     const url = `${this.apiUrlUsers}/login?email=${email}&password=${password}`;
-    // On envoie un POST vide (ou un body vide) selon votre API
     return this.http.post<User>(url, {});
   }
 
@@ -100,7 +91,6 @@ export class Service {
   }
 
   createComment(content: string, authorId: number, articleId: number): Observable<Comment> {
-    // Endpoint : /api/comments/create-comment?content=...&authorId=...&articleId=...
     const url = `${this.apiUrlComments}/create-comment?content=${content}&authorId=${authorId}&articleId=${articleId}`;
     return this.http.post<Comment>(url, {});
   }

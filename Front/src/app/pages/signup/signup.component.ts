@@ -33,16 +33,12 @@ export class SignupComponent {
       this.service.signupUser(name, email, password).subscribe({
         next: (user: User) => {
           console.log('Connexion réussie, utilisateur récupéré :', user);
-
           AppComponent.userID = user.id;
           console.log('L\'ID EST : ', AppComponent.userID);
-
-          // Redirection vers la page Home
           this.router.navigate(['/home']);
         },
         error: (err) => {
           console.error('Erreur lors de la connexion :', err);
-          // Afficher un message d'erreur si besoin
         }
       });
     }

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Service, Article, Comment, Like } from '../../services/service.component';
-import {AppComponent} from '../../app.component'; // import Comment si besoin
+import {AppComponent} from '../../app.component';
 
 @Component({
   standalone: true,
@@ -17,14 +17,13 @@ import {AppComponent} from '../../app.component'; // import Comment si besoin
 export class ArticleDetailsComponent implements OnInit {
   articleId: number | null = null;
   article: Article | null = null;
-  comments: Comment[] = [];   // Tableau typé selon votre interface
+  comments: Comment[] = [];
   likes: Like[] = [];
 
   commentForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private formBuilder: FormBuilder,
     private service: Service
   ) {
@@ -34,17 +33,14 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Récupération du paramètre d'URL
     this.articleId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // On récupère l'article depuis le backend
     if (this.articleId) {
       this.service.getArticleById(this.articleId).subscribe({
         next: (data) => {
           this.article = data;
           console.log('Article récupéré :', data);
 
-          // Maintenant, on récupère les commentaires et les likes de cet article
           if (this.articleId) {
             this.loadComments(this.articleId);
             this.loadLikes(this.articleId);
@@ -71,7 +67,6 @@ export class ArticleDetailsComponent implements OnInit {
 
   onSubmitComment(): void {
     if (this.commentForm.valid && this.articleId) {
-      // 1) Récupérer le contenu du commentaire
       const content = this.commentForm.value.content;
       const authorId = AppComponent.userID;
       this.service.createComment(content, authorId, this.articleId).subscribe({
@@ -90,7 +85,6 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   isAuthorObject(author: Comment['author']): author is { id: number; name: string; email: string } {
-    // on vérifie si "author" est un objet et qu'il possède la propriété "name"
     return typeof author === 'object' && author !== null && 'name' in author;
   }
 
@@ -113,7 +107,6 @@ export class ArticleDetailsComponent implements OnInit {
       this.service.likeArticle(userId, this.articleId).subscribe({
         next: (newLike: Like) => {
           console.log('Nouveau like créé :', newLike);
-          // On ajoute le nouveau Like dans le tableau local
           this.likes.push(newLike);
         },
         error: (err) => {

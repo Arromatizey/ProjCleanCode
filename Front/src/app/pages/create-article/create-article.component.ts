@@ -32,8 +32,6 @@ export class CreateArticleComponent {
       this.service.createArticle(title, content, id).subscribe({
         next: (user: User) => {
           console.log('Connexion réussie, utilisateur récupéré :', user);
-
-          // Redirection vers la page Home
           this.router.navigate(['/home']);
         },
         error: (err) => {
