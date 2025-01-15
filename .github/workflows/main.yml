@@ -19,7 +19,7 @@ jobs:
         env:
           MARIADB_ROOT_PASSWORD: test
           MARIADB_DATABASE: cleancode
-          MARIADB_USER: root
+          MARIADB_USER: roottt
           MARIADB_PASSWORD: test
         options: >-
           --health-cmd="mysqladmin ping -h localhost -u root -ptest --silent"
@@ -55,6 +55,6 @@ jobs:
         run: mvn test
         env:
           SPRING_DATASOURCE_URL: jdbc:mariadb://127.0.0.1:3306/cleancode
-          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_USERNAME: roottt
           SPRING_DATASOURCE_PASSWORD: test
 
