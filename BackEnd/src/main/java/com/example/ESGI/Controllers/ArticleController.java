@@ -2,6 +2,7 @@ package com.example.ESGI.Controllers;
 import com.example.ESGI.model.Article;
 import com.example.ESGI.Repositories.*;
 
+import com.example.ESGI.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,26 +17,34 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200") // ou "*"
 public class ArticleController {
     private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
 
-    public ArticleController(ArticleRepository articleRepository) {
+    public ArticleController(ArticleRepository articleRepository, UserRepository userRepository) {
         this.articleRepository = articleRepository;
+        this.userRepository = userRepository;
     }
 
-    @PostMapping
-    public Article createArticle(@RequestBody Article article) {
+    @PostMapping("/create-article")
+    public Article createArticle(
+            @RequestParam String title,
+            @RequestParam String content,
+            @RequestParam(required = false) Long authorId) {
+
         Article copiedArticle = new Article();
 
-        copiedArticle.setTitle(article.getTitle());
-        copiedArticle.setContent(article.getContent());
-        copiedArticle.setPublicationDate(LocalDateTime.now()); // Always setting the current publication date
+        copiedArticle.setTitle(title);
+        copiedArticle.setContent(content);
+        copiedArticle.setPublicationDate(LocalDateTime.now()); // Always set the current publication date
 
-        if (article.getAuthor() != null) {
-            copiedArticle.setAuthor(article.getAuthor());
+        // If authorId is provided, set the author of the article
+        if (authorId != null) {
+            User author = userRepository.findById(authorId)
+                    .orElseThrow(() -> new RuntimeException("Author not found"));
+            copiedArticle.setAuthor(author);
         }
 
         return articleRepository.save(copiedArticle);
     }
-
     @GetMapping("/{id}")
     public Optional<Article> getArticle(@PathVariable Long id) {
         return articleRepository.findById(id);

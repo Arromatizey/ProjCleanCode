@@ -15,14 +15,18 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        User copiedUser = new User();
+    @PostMapping("/create-user")
+    public User createUser(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam String motDePasse) {
 
-        copiedUser.setName(user.getName());
-        copiedUser.setEmail(user.getEmail());
-        copiedUser.setMotDePasse(user.getMotDePasse());
-        return userRepository.save(copiedUser);
+        User copiedUser = new User();
+        copiedUser.setName(name);
+        copiedUser.setEmail(email);
+        copiedUser.setMotDePasse(motDePasse);
+        userRepository.save(copiedUser);
+        return copiedUser;
     }
 
     @GetMapping("/{id}")
