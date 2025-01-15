@@ -7,14 +7,13 @@ import com.example.ESGI.Repositories.CommentRepository;
 import com.example.ESGI.Repositories.ArticleRepository;
 
 import com.example.ESGI.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/comments")
@@ -33,30 +32,26 @@ public class CommentController {
 
     @PostMapping("/create-comment")
     public Comment createComment(
-            @RequestParam String content,// Assuming it will be a String (e.g., "2025-01-15")
+            @RequestParam String content,
             @RequestParam(required = false) Long authorId,
             @RequestParam(required = false) Long articleId) {
 
         Comment copiedComment = new Comment();
 
         copiedComment.setContent(content);
-        copiedComment.setPublicationDate(LocalDateTime.now());; // Parse the date to a LocalDate object
-
-        // If an author ID is provided, set the author of the comment
+        copiedComment.setPublicationDate(LocalDateTime.now());
         if (authorId != null) {
             User author = userRepository.findById(authorId)
                     .orElseThrow(() -> new RuntimeException("Author not found"));
             copiedComment.setAuthor(author);
         }
 
-        // If an article ID is provided, set the article of the comment
         if (articleId != null) {
             Article article = articleRepository.findById(articleId)
                     .orElseThrow(() -> new RuntimeException("Article not found"));
             copiedComment.setArticle(article);
         }
 
-        // Save and return the created comment
         return commentRepository.save(copiedComment);
     }
 
@@ -65,5 +60,4 @@ public class CommentController {
         return commentRepository.findByArticleId(articleId);
     }
 
-    // You can add more methods as needed
 }
