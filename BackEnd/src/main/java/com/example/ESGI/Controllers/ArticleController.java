@@ -32,7 +32,6 @@ public class ArticleController {
         copiedArticle.setContent(content);
         copiedArticle.setPublicationDate(LocalDateTime.now());
 
-        // If authorId is provided, set the author of the article
         if (authorId != null) {
             User author = userRepository.findById(authorId)
                     .orElseThrow(() -> new RuntimeException("Author not found"));
