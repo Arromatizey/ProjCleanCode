@@ -105,8 +105,9 @@ export class Service {
     return this.http.post<Comment>(url, {});
   }
 
-  addLikeToArticle(articleId: number, userId: number): Observable<Like> {
-    // Selon votre backend, ça peut être /api/likes/{articleId}/{userId} ou un body JSON
-    return this.http.post<Like>(`${this.apiUrlLikes}/${articleId}`, { userId });
+  likeArticle(userId: number, articleId: number): Observable<Like> {
+    const url = `${this.apiUrlLikes}/create-jaime?userId=${userId}&articleId=${articleId}`;
+    return this.http.post<Like>(url, {});
   }
+
 }

@@ -70,7 +70,7 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   onSubmitComment(): void {
-      if (this.commentForm.valid && this.articleId) {
+    if (this.commentForm.valid && this.articleId) {
       // 1) Récupérer le contenu du commentaire
       const content = this.commentForm.value.content;
       const authorId = AppComponent.userID;
@@ -106,24 +106,20 @@ export class ArticleDetailsComponent implements OnInit {
     });
   }
 
-  // likeArticle(): void {
-  //   if (this.articleId) {
-  //     // Supposons qu’on ait l’ID user dans une variable userId=1 (exemple)
-  //     const userId = 1;
-  //
-  //     this.service.addLikeToArticle(this.articleId, userId).subscribe({
-  //       next: (newLike) => {
-  //         console.log('Nouveau like créé :', newLike);
-  //         // Soit vous incrémentez localement:
-  //         if (this.article) {
-  //           this.article.jaime = (this.article.jaime || 0) + 1;
-  //         }
-  //       },
-  //       error: (err) => {
-  //         console.error('Erreur lors du like :', err);
-  //       },
-  //     });
-  //   }
-  // }
+  likeArticle(): void {
+    if (this.articleId) {
+      const userId = AppComponent.userID;
 
+      this.service.likeArticle(userId, this.articleId).subscribe({
+        next: (newLike: Like) => {
+          console.log('Nouveau like créé :', newLike);
+          // On ajoute le nouveau Like dans le tableau local
+          this.likes.push(newLike);
+        },
+        error: (err) => {
+          console.error('Erreur lors de l’ajout du like :', err);
+        }
+      });
+    }
+  }
 }
