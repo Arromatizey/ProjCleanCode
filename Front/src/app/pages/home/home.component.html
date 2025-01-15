@@ -1,0 +1,50 @@
+<!-- src/app/pages/home/home.component.html -->
+<div class="container mx-auto p-6 bg-[#fafaf2] text-gray-800 min-h-screen">
+  <h2 class="text-3xl font-bold mb-6 tracking-wide uppercase">
+    Liste des articles
+  </h2>
+
+  <!-- Barre de recherche -->
+  <div class="mb-6">
+    <input
+      type="text"
+      placeholder="Rechercher un article par titre"
+      [value]="searchQuery"
+      (input)="onSearchChange($event)"
+      class="border border-gray-300 rounded w-full p-3 focus:outline-none focus:border-gray-400"
+    />
+  </div>
+
+  <!-- Liste d'articles -->
+  <div
+    *ngFor="let article of filteredArticles"
+    class="mb-6 pb-4 border-b border-gray-200"
+  >
+    <h3 class="text-xl font-semibold mb-2 tracking-wide">
+      <a
+        [routerLink]="['/article', article.id]"
+        class="hover:text-[#b8a07e] transition-colors duration-200"
+      >
+        {{ article.title }}
+      </a>
+    </h3>
+    <p class="text-gray-700 mb-2 leading-relaxed">
+      <!-- Affiche le début du contenu -->
+      {{ article.content | slice:0:50 }}...
+    </p>
+
+    <div class="text-gray-600 flex items-center gap-2">
+      <span class="text-lg">👍</span>
+      <span>{{ article.likesCount }} likes</span>
+    </div>
+  </div>
+  
+  <div class="mt-8">
+    <a
+      routerLink="/create-article"
+      class="inline-block bg-[#b8a07e] text-white px-5 py-3 rounded-md font-medium tracking-wide hover:bg-[#a38f70] transition-colors"
+    >
+      Créer un nouvel article
+    </a>
+  </div>
+</div>
