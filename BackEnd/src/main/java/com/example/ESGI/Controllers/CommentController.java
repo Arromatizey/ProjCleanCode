@@ -1,36 +1,29 @@
 package com.example.ESGI.Controllers;
 
 import com.example.ESGI.model.Comment;
-import com.example.ESGI.Repositories.CommentRepository;
-import com.example.ESGI.Repositories.ArticleRepository;
+import com.example.ESGI.service.CommentService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
 
-    private final CommentRepository commentRepository;
-    private final ArticleRepository articleRepository;
+    private final CommentService commentService;
 
-    public CommentController(CommentRepository commentRepository, ArticleRepository articleRepository) {
-        this.commentRepository = commentRepository;
-        this.articleRepository = articleRepository;
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
     @PostMapping
     public Comment createComment(@RequestBody Comment comment) {
-        return commentRepository.save(comment);
+        return commentService.createComment(comment);
     }
 
     @GetMapping("/{articleId}")
     public List<Comment> getCommentsByArticleId(@PathVariable Long articleId) {
-        return commentRepository.findByArticleId(articleId);
+        return commentService.getCommentsByArticleId(articleId);
     }
 
-    // You can add more methods as needed
 }
