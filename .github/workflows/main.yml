@@ -17,10 +17,10 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MARIADB_ROOT_PASSWORD: 
+          MARIADB_ROOT_PASSWORD: test
           MARIADB_DATABASE: cleancode  # Correspond à la base de données utilisée dans application.properties
           MARIADB_USER: root
-          MARIADB_PASSWORD:
+          MARIADB_PASSWORD: test
         options: >-
           --health-cmd="mysqladmin ping -h localhost -u root - --silent"
           --health-interval=10s
@@ -45,4 +45,4 @@ jobs:
         env:
           SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/cleancode
           SPRING_DATASOURCE_USERNAME: root
-          SPRING_DATASOURCE_PASSWORD:
+          SPRING_DATASOURCE_PASSWORD: test
