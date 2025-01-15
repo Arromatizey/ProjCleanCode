@@ -25,6 +25,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
+          --disable-content-trust
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -51,4 +52,3 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:mariadb://127.0.0.1:3307/cleancode
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: ""
-
