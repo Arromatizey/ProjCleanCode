@@ -9,7 +9,8 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent},
   { path: 'create-article', component: CreateArticleComponent },
   { path: 'article/:id', component: ArticleDetailsComponent },
   { path: 'signup', component: SignupComponent },

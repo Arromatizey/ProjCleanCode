@@ -42,6 +42,13 @@ export interface Like {
   };
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  motDePasse: string;
+}
+
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +57,7 @@ export class Service {
   private apiUrlArticles = 'http://localhost:8080/api/articles';
   private apiUrlComments = 'http://localhost:8080/api/comments';
   private apiUrlLikes = 'http://localhost:8080/api/likes';
+  private apiUrlUsers = 'http://localhost:8080/api/users';
 
   constructor(private http: HttpClient) {}
 
@@ -74,9 +82,20 @@ export class Service {
     return this.http.get<Like[]>(`${this.apiUrlLikes}/${articleId}`);
   }
 
-  // Méthode pour ajouter un like (POST)
-  // addLikeToArticle(articleId: number, userId: number): Observable<Like> {
-  //   // Selon votre backend, ça peut être /api/likes/{articleId}/{userId} ou un body JSON
-  //   return this.http.post<Like>(`${this.apiUrlLikes}/${articleId}`, { userId });
-  // }
+  loginUser(email: string, password: string): Observable<User> {
+    // D'après votre Swagger, c'est un POST sur /api/users/login?email=...&password=...
+    const url = `${this.apiUrlUsers}/login?email=${email}&password=${password}`;
+    // On envoie un POST vide (ou un body vide) selon votre API
+    return this.http.post<User>(url, {});
+  }
+
+  signupUser(name: string, email: string, password: string): Observable<User>{
+    const url = `${this.apiUrlUsers}/name=${name}&email=${email}&password${password}`;
+    return this.http.post<User>(url, {});
+  }
+
+  addLikeToArticle(articleId: number, userId: number): Observable<Like> {
+    // Selon votre backend, ça peut être /api/likes/{articleId}/{userId} ou un body JSON
+    return this.http.post<Like>(`${this.apiUrlLikes}/${articleId}`, { userId });
+  }
 }
