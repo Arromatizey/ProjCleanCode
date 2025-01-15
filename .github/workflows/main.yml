@@ -17,14 +17,14 @@ jobs:
         ports:
           - 3307:3306
         env:
-          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'  # Explicitly allow an empty root password
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'
+          MARIADB_ROOT_PASSWORD: ""
           MARIADB_DATABASE: cleancode
         options: >-
           --health-cmd="mysqladmin ping -h localhost --silent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -38,7 +38,7 @@ jobs:
       - name: Debug MariaDB Logs on Failure
         if: failure()
         run: |
-          echo "Capturing MariaDB logs due to failure...";
+          echo "Capturing MariaDB logs due to failure..."
           docker ps -a
           docker logs $(docker ps -aqf "ancestor=mariadb:latest")
 
