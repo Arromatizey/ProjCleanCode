@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { Service, Article, Comment, Like } from '../../services/service.component'; // import Comment si besoin
+import { Service, Article, Comment, Like } from '../../services/service.component';
+import {AppComponent} from '../../app.component'; // import Comment si besoin
 
 @Component({
   standalone: true,
@@ -69,38 +70,22 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   onSubmitComment(): void {
-    if (this.commentForm.valid) {
-      // Exemple : vous envoyez un nouveau commentaire au backend
-      const newComment = {
-        content: this.commentForm.value.content,
-        // Ajoutez d’autres champs si nécessaires (auteur, date, etc.)
-      };
+      if (this.commentForm.valid && this.articleId) {
+      // 1) Récupérer le contenu du commentaire
+      const content = this.commentForm.value.content;
+      const authorId = AppComponent.userID;
+      this.service.createComment(content, authorId, this.articleId).subscribe({
+        next: (createdComment) => {
+          console.log('Commentaire créé :', createdComment);
 
-      console.log('Nouveau commentaire à envoyer :', newComment);
+          this.comments.push(createdComment);
 
-      // Si vous avez un endpoint du type POST /api/comments/{articleId}
-      // vous pourriez faire quelque chose comme :
-      //
-      // this.service.addComment(this.articleId, newComment).subscribe({
-      //   next: (savedComment) => {
-      //     console.log('Commentaire créé :', savedComment);
-      //     this.comments.push(savedComment);
-      //     this.commentForm.reset();
-      //   },
-      //   error: (err) => {
-      //     console.error('Erreur lors de la création du commentaire :', err);
-      //   }
-      // });
-
-      // Pour l’instant, on simule juste l’ajout en local
-      const commentLocal = {
-        id: Math.random(), // ID fictif
-        content: this.commentForm.value.content,
-        publicationDate: new Date().toISOString(),
-        author: 'MonUser'
-      };
-      this.comments.push(commentLocal);
-      this.commentForm.reset();
+          this.commentForm.reset();
+        },
+        error: (err) => {
+          console.error('Erreur lors de la création du commentaire :', err);
+        },
+      });
     }
   }
 
