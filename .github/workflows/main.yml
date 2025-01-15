@@ -15,10 +15,10 @@ jobs:
       mariadb:
         image: mariadb:latest
         ports:
-          - 3307:3307
+          - 3306:3306
         env:
           MARIADB_ROOT_PASSWORD: 
-          MARIADB_DATABASE: blog  # Correspond à la base de données utilisée dans application.properties
+          MARIADB_DATABASE: cleancode  # Correspond à la base de données utilisée dans application.properties
           MARIADB_USER: root
           MARIADB_PASSWORD:
         options: >-
@@ -43,6 +43,6 @@ jobs:
       - name: Run tests
         run: mvn test
         env:
-          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3307/blog
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/cleancode
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD:
