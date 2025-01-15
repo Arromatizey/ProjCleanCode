@@ -70,7 +70,7 @@
 	</dependencies>
 
 	<build>
-		<sourceDirectory>backend/src/main/java</sourceDirectory>
+		<sourceDirectory>BackEnd/src/main/java</sourceDirectory>
 		<testSourceDirectory>backend/src/test/java</testSourceDirectory>
 		<resources>
 			<resource>
