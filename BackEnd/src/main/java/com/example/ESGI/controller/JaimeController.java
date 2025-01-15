@@ -1,10 +1,10 @@
-package com.example.ESGI.Controllers;
+package com.example.ESGI.controller;
 
 import com.example.ESGI.model.Article;
 import com.example.ESGI.model.Jaime;
-import com.example.ESGI.Repositories.JaimeRepository;
-import com.example.ESGI.Repositories.ArticleRepository;
-import com.example.ESGI.Repositories.UserRepository;
+import com.example.ESGI.repository.JaimeRepository;
+import com.example.ESGI.repository.ArticleRepository;
+import com.example.ESGI.repository.UserRepository;
 import com.example.ESGI.model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

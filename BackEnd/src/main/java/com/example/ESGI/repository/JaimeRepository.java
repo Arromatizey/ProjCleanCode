@@ -1,5 +1,5 @@
 
-package com.example.ESGI.Repositories;
+package com.example.ESGI.repository;
 import com.example.ESGI.model.*;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
