@@ -20,12 +20,9 @@ jobs:
           MARIADB_ROOT_PASSWORD: rootpassword  # Root password for MariaDB
           MARIADB_DATABASE: cleancode  # Database name
           MARIADB_USER: root  # MariaDB user
-          MARIADB_PASSWORD: test  # MariaDB password
-        options: >
-          --health-cmd="mysqladmin ping --silent" 
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=5
+          MARIADB_PASSWORD: ""  # MariaDB password
+        options: >-
+          --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -44,4 +41,4 @@ jobs:
         env:
           SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/cleancode  # MariaDB connection URL
           SPRING_DATASOURCE_USERNAME: root  # MariaDB username
-          SPRING_DATASOURCE_PASSWORD:  "" # MariaDB password
+          SPRING_DATASOURCE_PASSWORD: ""  # MariaDB password
