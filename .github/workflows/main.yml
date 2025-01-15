@@ -48,6 +48,13 @@ jobs:
             sleep 5;
           done
 
+      - name: Debug MariaDB Logs on Failure
+        if: failure()
+        run: |
+          echo "Capturing MariaDB logs due to failure...";
+          docker ps -a
+          docker logs $(docker ps -aqf "ancestor=mariadb:latest")
+
       - name: Build with Maven
         run: mvn clean install
 
