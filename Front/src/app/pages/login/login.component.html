@@ -1,42 +1,52 @@
 <!-- src/app/pages/login/login.component.html -->
-<div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
-  <h2 class="text-xl font-bold mb-4">Connexion</h2>
+<div class="min-h-screen bg-[#fafaf2] flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-white p-8 rounded-md shadow border border-gray-200">
+    <h2 class="text-2xl font-bold mb-6 tracking-wide uppercase text-gray-800">
+      Connexion
+    </h2>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <!-- Email -->
-    <div class="mb-4">
-      <label for="userEmail" class="block font-medium mb-1">Email</label>
-      <input
-        id="userEmail"
-        type="email"
-        formControlName="userEmail"
-        class="border border-gray-300 rounded w-full p-2"
-      />
-      <div class="text-red-500 text-sm" *ngIf="loginForm.get('userEmail')?.invalid && loginForm.get('userEmail')?.touched">
-        Veuillez saisir une adresse email valide.
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <div class="mb-6">
+        <label for="userEmail" class="block font-medium mb-1 text-gray-700">Email</label>
+        <input
+          id="userEmail"
+          type="email"
+          formControlName="userEmail"
+          class="border border-gray-300 rounded w-full p-3 focus:outline-none focus:border-gray-400"
+        />
+        <div
+          class="text-red-500 text-sm mt-1"
+          *ngIf="loginForm.get('userEmail')?.invalid && loginForm.get('userEmail')?.touched"
+        >
+          Veuillez saisir une adresse email valide.
+        </div>
       </div>
-    </div>
 
-    <!-- Mot de passe -->
-    <div class="mb-4">
-      <label for="userPassword" class="block font-medium mb-1">Mot de passe</label>
-      <input
-        id="userPassword"
-        type="password"
-        formControlName="userPassword"
-        class="border border-gray-300 rounded w-full p-2"
-      />
-      <div class="text-red-500 text-sm" *ngIf="loginForm.get('userPassword')?.invalid && loginForm.get('userPassword')?.touched">
-        Mot de passe requis.
+      <!-- Mot de passe -->
+      <div class="mb-6">
+        <label for="userPassword" class="block font-medium mb-1 text-gray-700">Mot de passe</label>
+        <input
+          id="userPassword"
+          type="password"
+          formControlName="userPassword"
+          class="border border-gray-300 rounded w-full p-3 focus:outline-none focus:border-gray-400"
+        />
+        <div
+          class="text-red-500 text-sm mt-1"
+          *ngIf="loginForm.get('userPassword')?.invalid && loginForm.get('userPassword')?.touched"
+        >
+          Mot de passe requis.
+        </div>
       </div>
-    </div>
 
-    <button
-      type="submit"
-      [disabled]="loginForm.invalid"
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-    >
-      Se connecter
-    </button>
-  </form>
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="bg-[#b8a07e] text-white px-6 py-2 rounded hover:bg-[#a38f70] transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full font-semibold tracking-wide"
+      >
+        Se connecter
+      </button>
+    </form>
+  </div>
 </div>
