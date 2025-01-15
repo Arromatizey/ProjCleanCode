@@ -18,7 +18,7 @@ export class CreateArticleComponent {
     this.articleForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       content: ['', [Validators.required, Validators.minLength(10)]],
-      publicationDate: [new Date().toISOString().substring(0, 10), Validators.required]
+
     });
   }
 

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/likes")  // You could adjust the path if you want
+@RequestMapping("/api/likes")
+@CrossOrigin(origins = "http://localhost:4200") // ou "*"
+// You could adjust the path if you want
 public class JaimeController {
 
     private final JaimeRepository jaimeRepository;

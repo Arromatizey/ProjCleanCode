@@ -1,57 +1,53 @@
 <!-- src/app/pages/create-article/create-article.component.html -->
-<div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
-  <h2 class="text-xl font-bold mb-4">Créer un article</h2>
+<div class="min-h-screen bg-[#fafaf2] flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-white p-8 rounded-md shadow border border-gray-200">
+    <h2 class="text-2xl font-bold mb-6 tracking-wide uppercase text-gray-800">
+      Créer un article
+    </h2>
 
-  <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
-    <!-- Titre -->
-    <div class="mb-4">
-      <label for="title" class="block font-medium mb-1">Titre</label>
-      <input
-        id="title"
-        type="text"
-        formControlName="title"
-        class="border border-gray-300 rounded w-full p-2"
-      />
-      <div class="text-red-500 text-sm" *ngIf="articleForm.get('title')?.invalid && articleForm.get('title')?.touched">
-        Le titre est requis (3 caractères minimum).
+    <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
+      <!-- Titre -->
+      <div class="mb-6">
+        <label for="title" class="block font-medium mb-1 text-gray-700">Titre</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          class="border border-gray-300 rounded w-full p-3 focus:outline-none focus:border-gray-400"
+        />
+        <div
+          class="text-red-500 text-sm mt-1"
+          *ngIf="articleForm.get('title')?.invalid && articleForm.get('title')?.touched"
+        >
+          Le titre est requis (3 caractères minimum).
+        </div>
       </div>
-    </div>
 
-    <!-- Contenu -->
-    <div class="mb-4">
-      <label for="content" class="block font-medium mb-1">Contenu</label>
-      <textarea
-        id="content"
-        rows="6"
-        formControlName="content"
-        class="border border-gray-300 rounded w-full p-2"
-      ></textarea>
-      <div class="text-red-500 text-sm" *ngIf="articleForm.get('content')?.invalid && articleForm.get('content')?.touched">
-        Le contenu est requis (10 caractères minimum).
+      <!-- Contenu -->
+      <div class="mb-6">
+        <label for="content" class="block font-medium mb-1 text-gray-700">Contenu</label>
+        <textarea
+          id="content"
+          rows="6"
+          formControlName="content"
+          class="border border-gray-300 rounded w-full p-3 focus:outline-none focus:border-gray-400"
+        ></textarea>
+        <div
+          class="text-red-500 text-sm mt-1"
+          *ngIf="articleForm.get('content')?.invalid && articleForm.get('content')?.touched"
+        >
+          Le contenu est requis (10 caractères minimum).
+        </div>
       </div>
-    </div>
 
-    <!-- Date de publication -->
-    <div class="mb-4">
-      <label for="publicationDate" class="block font-medium mb-1">Date de publication</label>
-      <input
-        id="publicationDate"
-        type="date"
-        formControlName="publicationDate"
-        class="border border-gray-300 rounded w-full p-2"
-      />
-      <div class="text-red-500 text-sm" *ngIf="articleForm.get('publicationDate')?.invalid && articleForm.get('publicationDate')?.touched">
-        Veuillez saisir une date valide.
-      </div>
-    </div>
-
-    <!-- Bouton -->
-    <button
-      type="submit"
-      [disabled]="articleForm.invalid"
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-    >
-      Publier l'article
-    </button>
-  </form>
+      <!-- Bouton -->
+      <button
+        type="submit"
+        [disabled]="articleForm.invalid"
+        class="bg-[#b8a07e] text-white px-6 py-2 rounded hover:bg-[#a38f70] transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full font-semibold tracking-wide"
+      >
+        Publier l'article
+      </button>
+    </form>
+  </div>
 </div>

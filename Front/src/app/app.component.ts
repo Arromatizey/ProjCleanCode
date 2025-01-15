@@ -11,4 +11,5 @@ import {CommonModule} from '@angular/common';
 })
 export class AppComponent {
   title = 'BlogCleanCode';
+  public static userID: any;
 }

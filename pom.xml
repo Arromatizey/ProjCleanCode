@@ -71,10 +71,10 @@
 
 	<build>
 		<sourceDirectory>BackEnd/src/main/java</sourceDirectory>
-		<testSourceDirectory>backend/src/test/java</testSourceDirectory>
+		<testSourceDirectory>BackEnd/src/test/java</testSourceDirectory>
 		<resources>
 			<resource>
-				<directory>backend/src/main/resources</directory>
+				<directory>BackEnd/src/main/resources</directory>
 			</resource>
 		</resources>
 		<plugins>
