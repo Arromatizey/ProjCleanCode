@@ -18,7 +18,7 @@ jobs:
           - 3306:3306
         env:
           MARIADB_ROOT_PASSWORD: test
-          MARIADB_DATABASE: cleancode  # Correspond à la base de données utilisée dans application.properties
+          MARIADB_DATABASE: cleancode
           MARIADB_USER: root
           MARIADB_PASSWORD: test
         options: >-
@@ -42,6 +42,10 @@ jobs:
 
       - name: Run tests
         run: mvn test
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/cleancode
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: test
         env:
           SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/cleancode
           SPRING_DATASOURCE_USERNAME: root
