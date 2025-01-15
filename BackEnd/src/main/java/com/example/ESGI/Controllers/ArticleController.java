@@ -45,4 +45,14 @@ public class ArticleController {
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
     }
+
+    @GetMapping("/searchByKeyword")
+    public List<Article> searchArticles(@RequestParam String keyword) {
+        return articleRepository.findByTitleContainingOrContentContaining(keyword, keyword);
+    }
+    @GetMapping("/searchByAuthorId")
+    public List<Article> searchArticlesByAuthor(@RequestParam Long authorId) {
+        return articleRepository.findByAuthorId(authorId);
+    }
+
 }
