@@ -16,6 +16,7 @@ import { AppComponent } from '../../app.component';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string = '';
 
   constructor(private formBuilder: FormBuilder, private router: Router, private service: Service) {
     this.loginForm = this.formBuilder.group({
@@ -31,13 +32,20 @@ export class LoginComponent {
 
       this.service.loginUser(email, password).subscribe({
         next: (user: User) => {
-          console.log('Connexion réussie, utilisateur récupéré :', user);
-          AppComponent.userID = user.id;
-          console.log('L\'ID EST : ', AppComponent.userID);
-          this.router.navigate(['/home']);
+          if (user && user.id) {
+            console.log('Connexion réussie, utilisateur récupéré :', user);
+            AppComponent.userID = user.id;
+            console.log('L\'ID EST : ', AppComponent.userID);
+            this.errorMessage = '';
+            this.router.navigate(['/home']);
+          } else {
+            console.error('Utilisateur non valide ou données incorrectes');
+            this.errorMessage = 'Email ou mot de passe incorrect.';
+          }
         },
         error: (err) => {
           console.error('Erreur lors de la connexion :', err);
+          this.errorMessage = 'Email ou mot de passe incorrect.';
         }
       });
     }
