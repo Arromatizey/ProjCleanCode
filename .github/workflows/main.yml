@@ -17,7 +17,7 @@ jobs:
         ports:
           - 3307:3306
         env:
-          MARIADB_ROOT_PASSWORD: ""
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'yes'  # Explicitly allow an empty root password
           MARIADB_DATABASE: cleancode
         options: >-
           --health-cmd="mysqladmin ping -h localhost -u root -ptest --silent"
